@@ -6,20 +6,31 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DatabaseTask.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class asda : Migration
+    public partial class second : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_Student",
+                table: "Student");
+
+            migrationBuilder.DropColumn(
+                name: "Id",
+                table: "Student");
+
             migrationBuilder.RenameColumn(
                 name: "ClassName",
                 table: "Student",
                 newName: "LastName");
 
-            migrationBuilder.RenameColumn(
-                name: "Id",
+            migrationBuilder.AddColumn<int>(
+                name: "StudentId",
                 table: "Student",
-                newName: "StudentId");
+                type: "int",
+                nullable: false,
+                defaultValue: 0)
+                .Annotation("SqlServer:Identity", "1, 1");
 
             migrationBuilder.AddColumn<string>(
                 name: "FirstName",
@@ -34,11 +45,17 @@ namespace DatabaseTask.Data.Migrations
                 nullable: false,
                 defaultValue: 0);
 
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_Student",
+                table: "Student",
+                column: "StudentId");
+
             migrationBuilder.CreateTable(
                 name: "Class",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ClassName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClassId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -78,13 +95,12 @@ namespace DatabaseTask.Data.Migrations
                 name: "Kitchen",
                 columns: table => new
                 {
-                    MenuDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    Food = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Food = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CouponId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Kitchen", x => x.MenuDate);
+                    table.PrimaryKey("PK_Kitchen", x => x.Food);
                 });
 
             migrationBuilder.CreateTable(
@@ -118,6 +134,14 @@ namespace DatabaseTask.Data.Migrations
             migrationBuilder.DropTable(
                 name: "School");
 
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_Student",
+                table: "Student");
+
+            migrationBuilder.DropColumn(
+                name: "StudentId",
+                table: "Student");
+
             migrationBuilder.DropColumn(
                 name: "FirstName",
                 table: "Student");
@@ -131,10 +155,17 @@ namespace DatabaseTask.Data.Migrations
                 table: "Student",
                 newName: "ClassName");
 
-            migrationBuilder.RenameColumn(
-                name: "StudentId",
+            migrationBuilder.AddColumn<Guid>(
+                name: "Id",
                 table: "Student",
-                newName: "Id");
+                type: "uniqueidentifier",
+                nullable: false,
+                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
+
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_Student",
+                table: "Student",
+                column: "Id");
         }
     }
 }

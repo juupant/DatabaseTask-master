@@ -10,7 +10,7 @@ namespace DatabaseTask.Core.Domain
     public class Student
     {
         [Key]
-        public Guid StudentId { get; set; }
+        public int StudentId { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public int ClassId { get; set; }

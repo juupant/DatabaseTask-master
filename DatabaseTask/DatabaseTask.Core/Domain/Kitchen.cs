@@ -10,7 +10,7 @@ namespace DatabaseTask.Core.Domain
     public class Kitchen
     {
         [Key]
-        public DateOnly MenuDate { get; set; }
+       
 
         public string? Food { get; set; }
 
